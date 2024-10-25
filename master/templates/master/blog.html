@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Chicken farm</title>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet">
+
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="/static/assets/css/main.css">
+	<!-- owl carousel -->
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- Owl Carousel JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+	<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			width: 100%;
+			overflow-x: hidden;
+			/* Prevent horizontal scroll */
+		}
+
+
+		body {
+			font-family: 'Barlow', sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		.preloader {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgb(255, 255, 255);
+			/* Optional: adds a white background with slight transparency */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			/* Make sure the preloader is on top of other content */
+		}
+
+		.page-content {
+			display: none;
+			/* Hide content initially */
+		}
+
+		.navbar {
+			position: sticky;
+			top: 0;
+			background-color: rgb(255, 255, 255);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			padding: 10px 20px;
+			z-index: 1000;
+		}
+
+		.navbar a {
+			text-decoration: none;
+			color: #000;
+			font-size: 16px;
+			margin: 0 10px;
+		}
+
+		.navbar a:hover {
+			color: green;
+			/* #916E99 */
+		}
+
+		.logo {
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		.button {
+			border-radius: 10px;
+			padding: 10px 8px;
+			background-color: rgb(0, 128, 0);
+			/* #916E99 */
+			color: #fff;
+			border: none;
+			cursor: pointer;
+		}
+
+		/* home section start */
+		.home-section {
+			position: relative;
+			overflow: hidden;
+			height: 80vh;
+			width: 100%;
+		}
+
+		.home-section::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			background-color: #00000000;
+			opacity: 0.7;
+			z-index: -1;
+		}
+
+		.home-section .home-bg {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 80%;
+			width: 100%;
+			background-image: url('heroo.jpg');
+			background-attachment: fixed;
+			background-size: cover;
+			background-position: center;
+			z-index: -2;
+			animation: zoomOut 20s ease infinite;
+			/* Corrected animation name */
+		}
+
+		@keyframes zoomOut {
+
+			/* Corrected to match the animation name */
+			0% {
+				transform: scale(1.2);
+				/* Start zoomed in */
+			}
+
+			50% {
+				transform: scale(1);
+				/* Zoom out to original size */
+			}
+
+			100% {
+				transform: scale(1.2);
+				/* Zoom in again to create a loop */
+			}
+		}
+
+
+		.home-section {
+			position: relative;
+			padding: 80px 0;
+			min-height: 100vh;
+			/* Ensures the section takes up the full viewport height */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			/* Centers the content vertically */
+			text-align: center;
+		}
+
+		.home-text {
+			max-width: 500px;
+			width: 100%;
+			margin-top: -10em !important;
+			margin-bottom: 5em;
+			color: #fff;
+			/* Ensure the text color contrasts well with the background image */
+		}
+
+		.home-text h1 {
+			font-size: 4em;
+			line-height: 75px;
+			margin: 0 0 5px;
+		}
+
+		.home-text p {
+			margin: 0 0 30px;
+		}
+
+
+
+
+
+
+		/* Update this for the hamburger icon */
+		.hamburger {
+			display: none;
+			flex-direction: column;
+			cursor: pointer;
+			transition: transform 0.3s ease;
+		}
+
+		.hamburger .bar1,
+		.hamburger .bar2,
+		.hamburger .bar3 {
+			width: 25px;
+			height: 3px;
+			background-color: black;
+			margin: 4px 0;
+			transition: 0.3s;
+		}
+
+		/* Transform hamburger into an 'X' */
+		.hamburger.active .bar1 {
+			transform: rotate(-45deg) translate(-5px, 6px);
+		}
+
+		.hamburger.active .bar2 {
+			opacity: 0;
+		}
+
+		.hamburger.active .bar3 {
+			transform: rotate(45deg) translate(-5px, -6px);
+		}
+
+		/* Mobile menu styles */
+		.mobile-nav {
+			display: none;
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 250px;
+			height: 40vh;
+			/* Only apply border-radius to the left side */
+			border-top-left-radius: 15px;
+			/* Adjust as needed */
+			border-bottom-left-radius: 15px;
+			/* Adjust as needed */
+
+			background-color: rgba(255, 255, 255, 0.959);
+
+			box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+			z-index: 1001;
+			padding-top: 60px;
+			flex-direction: column;
+			transform: translateX(100%);
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.mobile-nav.active {
+			display: flex;
+			transform: translateX(0);
+		}
+
+		/* Mobile menu links styles */
+		.mobile-nav a {
+			padding: 10px 20px;
+			text-decoration: none;
+			font-size: 16px;
+			color: black;
+			display: block;
+		}
+
+		.mobile-nav a:hover {
+			background-color: #ddd;
+		}
+
+		/* Close button */
+		.close-btn {
+			font-size: 3em;
+			cursor: pointer;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			color: #000;
+		}
+
+		/* Overlay styles */
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.5);
+			display: none;
+			/* Hidden by default */
+			z-index: 1000;
+		}
+
+		/* Show overlay when menu is active */
+		.overlay.active {
+			display: block;
+		}
+
+
+
+		@media (max-width: 768px) {
+			.navbar .nav-links {
+				display: none;
+			}
+
+			.hamburger {
+				display: flex;
+			}
+
+			.home-text {
+				margin-top: 10em;
+			}
+
+		}
+
+
+
+
+
+		.arrow-box {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			width: 40px;
+			height: 40px;
+			background-color: green;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			z-index: 1000;
+		}
+
+		.arrow-up {
+			width: 0;
+			height: 0;
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			border-bottom: 10px solid white;
+		}
+
+
+		.whatsapp-icon {
+			position: fixed;
+			bottom: 20px;
+			left: 20px;
+			width: 3em;
+			height: 3em;
+			background-color: #1b7d12;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			z-index: 1000;
+		}
+
+		.whatsapp-icon i {
+			color: white;
+			font-size: 2em;
+		}
+
+
+
+
+
+
+
+		.contact-banner {
+			background-image: url('/static/assets/images/hero3.jpg');
+			background-size: cover;
+			background-position: center;
+			padding: 70px 0;
+			text-align: center;
+			color: #fff;
+			position: relative;
+		}
+
+		.contact-content h2 {
+			font-size: 2.5em;
+			margin-bottom: 10px;
+			margin-top: 1em;
+		}
+
+		.contact-content p {
+			font-size: 1.2em;
+			margin-bottom: 20px;
+		}
+
+		#contactButton {
+			background-color: green;
+			color: #fff;
+			padding: 15px 30px;
+			font-size: 1em;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		#contactButton:hover {
+			background-color: rgb(88, 104, 88);
+		}
+
+		.contact-form-menu {
+			position: fixed;
+			top: 3em;
+			right: -100%;
+			width: 70%;
+			height: 100%;
+			background-color: #ffffff;
+			box-shadow: -3px 0 5px rgba(0, 0, 0, 0.2);
+			transition: right 0.5s ease;
+			z-index: 999;
+			overflow-y: auto;
+		}
+
+		.contact-form-menu.active {
+			right: 0;
+		}
+
+		.contact-form-header {
+			background-color: green;
+			color: #fff;
+			padding: 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.contact-form-header h2 {
+			margin: 0;
+			font-size: 1.8em;
+		}
+
+		.close-btn {
+			font-size: 1.5em;
+			cursor: pointer;
+		}
+
+		form {
+			padding: 20px;
+		}
+
+		form label {
+			display: block;
+			margin: 15px 0 5px;
+			font-weight: bold;
+		}
+
+		form input[type="text"],
+		form input[type="email"],
+		form textarea {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 1em;
+		}
+
+		form button[type="submit"] {
+			background-color: green;
+			color: #fff;
+			padding: 15px 30px;
+			font-size: 1em;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			margin-top: 20px;
+		}
+
+		form button[type="submit"]:hover {
+			background-color: rgb(69, 97, 69);
+		}
+
+
+		/* Button styling */
+		.learn-more-btn {
+			background-color: rgb(0, 0, 0);
+			color: white;
+			border: none;
+			padding: 0.75em 1.5em;
+			font-size: 1em;
+			border-radius: 13px;
+			cursor: pointer;
+		}
+
+		.learn-more-btn:hover {
+			background-color: green;
+		}
+
+
+
+
+
+
+
+		.image-grid {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0;
+			justify-content: center;
+			/* Center items */
+		}
+
+		.image-grid .image-item {
+			position: relative;
+			width: calc(100% / 3);
+			/* Three images per row on larger screens */
+			padding-bottom: calc(100% / 3);
+			/* Maintain aspect ratio */
+		}
+
+		.image-grid .image-item img {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.image-grid .image-item .overlay {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 50%;
+			height: 20%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			/* Aligns content to the bottom */
+			align-items: flex-start;
+			/* Aligns content to the left */
+			padding: 10px;
+			/* Optional: adds some padding around the text */
+			background-color: rgba(0, 0, 0, 0.381);
+
+		}
+
+
+
+		.image-grid .image-item .overlay p {
+			color: #fff;
+			font-size: 1.2em;
+			margin: 0;
+		}
+
+
+
+
+
+		@media (max-width: 1024px) {
+			.image-grid .image-item {
+				width: 100%;
+
+			}
+		}
+
+		@media (max-width: 768px) {
+			.image-grid .image-item {
+				width: 100%;
+				/* One image per row on smaller screens */
+				padding-bottom: 100%;
+				/* Maintain aspect ratio */
+			}
+
+
+		}
+
+		.footer {
+			background-color: #111;
+			color: #fff;
+			padding: 40px 0;
+			font-family: 'Arial', sans-serif;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 15px;
+		}
+
+		.footer-columns {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+
+		.footer-column {
+			flex: 1;
+			margin: 0 15px;
+			min-width: 250px;
+		}
+
+		.footer-column h3 {
+			font-size: 1.5em;
+			margin-bottom: 15px;
+		}
+
+		.footer-column p,
+		.footer-column ul,
+		.footer-column li {
+			font-size: 0.9em;
+			line-height: 1.6;
+			margin-bottom: 10px;
+		}
+
+		.footer-column ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		.footer-column li {
+			display: flex;
+			align-items: center;
+		}
+
+		.footer-column li .fas {
+			margin-right: 10px;
+			font-size: 1.2em;
+		}
+
+		.footer-column li .arrow {
+			color: red;
+			margin-right: 10px;
+			font-size: 1.2em;
+		}
+
+		.footer-bottom {
+			text-align: center;
+			margin-top: 30px;
+			border-top: 1px solid #333;
+			padding-top: 15px;
+			font-size: 0.85em;
+		}
+
+		.footer-bottom p {
+			margin: 0;
+		}
+
+
+		.clear {
+			clear: both;
+		}
+
+		img {
+			max-width: 100%;
+			border: 0px;
+		}
+
+		ul,
+		ol {
+			list-style: none;
+		}
+
+		a {
+			text-decoration: none;
+			color: inherit;
+			outline: none;
+			transition: all 0.4s ease-in-out;
+			-webkit-transition: all 0.4s ease-in-out;
+		}
+
+		a:focus,
+		a:active,
+		a:visited,
+		a:hover {
+			text-decoration: none;
+			outline: none;
+		}
+
+		a:hover {
+			color: #e73700;
+		}
+
+		h2 {
+			margin-bottom: 48px;
+			padding-bottom: 16px;
+			font-size: 20px;
+			line-height: 28px;
+			font-weight: 700;
+			position: relative;
+			text-transform: capitalize;
+		}
+
+		h3 {
+			margin: 0 0 10px;
+			font-size: 28px;
+			line-height: 36px;
+		}
+
+		button {
+			outline: none !important;
+		}
+
+
+
+
+		.containery {
+			/* CHANGE TO GRID */
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			justify-items: center;
+			grid-gap: 20px;
+			width: 940px;
+			max-width: 100%;
+			margin: auto;
+		}
+
+		.cardy {
+			background-color: #fff;
+			border-radius: 10px;
+			box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+			overflow: hidden;
+			width: 300px;
+		}
+
+		.card-headery img {
+			object-fit: cover;
+			height: 200px;
+			width: 100%;
+		}
+
+		.card-bodyy {
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			padding: 20px;
+			min-height: 250px;
+		}
+
+		.card-bodyy h4 {
+			margin: 10px 0;
+		}
+
+		.card-bodyy p {
+			font-size: 13px;
+			margin: 0 0 40px;
+		}
+
+		.tag {
+			background-color: #fff;
+			border-radius: 50px;
+			font-size: 12px;
+			color: #fff;
+			margin: 0;
+			padding: 2px 10px;
+			text-transform: uppercase;
+		}
+
+		.tag-teal {
+			background-color: #92d4e4;
+		}
+
+		.tag-purple {
+			background-color: #3d1d94;
+		}
+
+		.tag-pink {
+			background-color: #c62bcb;
+		}
+
+		.user {
+			display: flex;
+			margin-top: auto;
+		}
+
+		.user img {
+			border-radius: 50%;
+			margin-right: 10px;
+			height: 40px;
+			width: 40px;
+		}
+
+		.user-info h5 {
+			margin: 0;
+		}
+
+		.user-info small {
+			color: #888785;
+		}
+
+		@media (max-width: 940px) {
+			.container {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="preloader">
+		<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+			type="module"></script>
+
+		<dotlottie-player src="https://lottie.host/34d602d4-731c-4609-8a02-ba33839bf51f/BiL0d3KrCU.json"
+			background="transparent" speed="3" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+	</div>
+	<div class="page-content">
+		<div class="navbar">
+			<div class="logo">
+				<a href="/">
+					<img src="/static/assets/images/logo.png" alt="Chicken Logo" style="width: 5em; height: auto;">
+				</a>
+			</div>
+
+			<div class="nav-links">
+				<a href="/">Home</a>
+				<a href="about">About Us</a>
+
+
+				<a href="news">News</a>
+				<a href="blogs">Blog</a>
+
+			</div>
+			<a href="contact"><button class="button"> Contact Us</button></a>
+			<div class="hamburger" onclick="toggleMobileNav()">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+			</div>
+
+		</div>
+		<div class="mobile-nav" id="mobile-nav">
+			<div class="close-btn" onclick="toggleMobileNav()">&times;</div>
+			<nav>
+
+				<a href="/"><i class="fas fa-home"></i> Home</a>
+				<a href="about"><i class="fas fa-info-circle"></i> About Us</a>
+
+
+				<a href="news"><i class="fas fa-users"></i> News</a>
+				<a href="blogs"><i class="fas fa-users"></i> Blog</a>
+				<a href="javascript:void(0);" id="contactLink"><i class="fas fa-envelope"></i> Contact</a>
+			</nav>
+
+		</div>
+
+		<!-- breadcrumb-section -->
+		<div class="breadcrumb-section breadcrumb-bg">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 offset-lg-2 text-center">
+						<div class="breadcrumb-text">
+							<p>We sell fresh meat</p>
+							<h1>Blog</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="containery" style="margin-top: 3em;">
+            {% for news in newss%}
+
+                <div class="cardy">
+                    <div class="card-headery">
+                        <a href="blog/{{news.id}}"><img src="/static/assets/{{news.images}}" alt="ballons" /></a>
+                    </div>
+                    <div class="card-body">
+                        <span class="tag tag-teal">Article</span>
+                        <h4>{{news.title}}</h4>
+                        <p>{{news.article|safe}}</p>
+                        <div class="user">
+                            <img src="/static/assets/images/pee.jpg" alt="ballons" />
+                            <div class="user-info">
+                                <h5>{{news.author}}</h5>
+                                <small>{{news.timestamp}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}    
+
+		</div>
+
+
+		<div class="contact-banner" style="margin-top: 2em;">
+			<div class="contact-content">
+				<h2>Stay Updated!</h2>
+				<p>Subscribe to our newsletter for the latest updates.</p>
+				<button id="contactButton">Contact Us</button>
+			</div>
+		</div>
+
+
+
+		<div class="contact-form-menu" id="contactFormMenu">
+			<div class="contact-form-header">
+				<h2>Contact Us</h2>
+				<span class="close-btn" id="closeForm">&times;</span>
+			</div>
+			<form>
+				<label for="name">Name</label>
+				<input type="text" id="name" name="name" required>
+
+				<label for="email">Email</label>
+				<input type="email" id="email" name="email" required>
+
+				<label for="message">Message</label>
+				<textarea id="message" name="message" rows="5" required></textarea>
+
+				<button type="submit">Send Message</button>
+			</form>
+		</div>
+
+
+		<footer class="footer">
+			<div class="container">
+				<div class="footer-columns">
+					<!-- About Us Section -->
+					<div class="footer-column">
+						<h3>About Us</h3>
+						<p>Nam libero tempore cum voluptate id est id, pretium semper enim. Morbi viverra congue
+							nisi
+							vel pulvinar posuere sapien eros.</p>
+					</div>
+
+					<!-- Latest News Section -->
+					<div class="footer-column">
+						<h3>Latest News</h3>
+						<ul>
+							<li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+							<li><span class="arrow">&rarr;</span> Dolor amet sed quam vitae</li>
+							<li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+							<li><span class="arrow">&rarr;</span> Dolor amet sed quam vitae</li>
+							<li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+						</ul>
+					</div>
+
+					<!-- Contact Info Section -->
+					<div class="footer-column">
+						<h3>Contact Info</h3>
+						<ul class="contact-info">
+							<li><i class="fas fa-map-marker-alt"></i> 8088 USA, Honey block, New York City.</li>
+							<li><i class="fas fa-envelope"></i> info@example.com</li>
+							<li><i class="fas fa-phone"></i> +0900000000</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<p>&copy; 2024 Wellplus. All rights reserved</p>
+				</div>
+			</div>
+		</footer>
+
+
+		<div class="arrow-box" onclick="scrollToTop()">
+			<div class="arrow-up"></div>
+		</div>
+
+		<div class="whatsapp-icon">
+			<i class="fab fa-whatsapp"></i>
+		</div>
+
+</body>
+</div>
+<script src="/static/assets/js/jquery-1.11.3.min.js"></script>
+
+
+<script src="/static/assets/js/main.js"></script>
+
+<script>
+	// script.js
+
+	window.addEventListener('load', () => {
+		const preloader = document.querySelector('.preloader');
+		const pageContent = document.querySelector('.page-content');
+
+		if (preloader && pageContent) {
+			setTimeout(() => {
+				preloader.style.opacity = '0';
+				preloader.style.transition = 'opacity 1s ease-out'; // Smooth fade-out transition
+
+				setTimeout(() => {
+					preloader.style.display = 'none';
+					pageContent.style.display = 'block'; // Show the page content
+				}, 1000); // Match this with the fade-out duration
+			}, 2000); // Preloader duration (3000ms = 3 seconds)
+		} else {
+			console.error('Preloader or page content not found');
+		}
+	});
+
+	// Open the contact form menu when the button is clicked
+	document.getElementById("contactButton").onclick = function () {
+		document.getElementById("contactFormMenu").classList.add("active");
+	}
+
+	// Open the contact form menu when the link is clicked
+	document.getElementById("contactLink").onclick = function () {
+		document.getElementById("contactFormMenu").classList.add("active");
+	}
+
+	// Close the contact form menu when the close button (X) is clicked
+	document.getElementById("closeForm").onclick = function () {
+		document.getElementById("contactFormMenu").classList.remove("active");
+	}
+
+	// Close the contact form menu when clicking outside of it
+	document.addEventListener('click', (event) => {
+		const contactFormMenu = document.getElementById('contactFormMenu');
+
+		if (!contactFormMenu.contains(event.target) && !document.getElementById('contactButton').contains(event.target) && !document.getElementById('contactLink').contains(event.target)) {
+			if (contactFormMenu.classList.contains('active')) {
+				contactFormMenu.classList.remove('active');
+			}
+		}
+	});
+
+
+
+
+</script>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const mobileNav = document.getElementById('mobile-nav');
+		const overlay = document.createElement('div');
+		overlay.classList.add('overlay');
+
+		document.body.appendChild(overlay);
+
+		function toggleMobileNav() {
+			if (mobileNav.classList.contains('active')) {
+				mobileNav.classList.remove('active');
+				overlay.classList.remove('active');
+			} else {
+				mobileNav.classList.add('active');
+				overlay.classList.add('active');
+			}
+		}
+
+		document.querySelector('.hamburger').addEventListener('click', toggleMobileNav);
+
+		document.querySelector('.close-btn').addEventListener('click', () => {
+			if (mobileNav.classList.contains('active')) {
+				mobileNav.classList.remove('active');
+				overlay.classList.remove('active');
+			}
+		});
+
+		overlay.addEventListener('click', () => {
+			if (mobileNav.classList.contains('active')) {
+				mobileNav.classList.remove('active');
+				overlay.classList.remove('active');
+			}
+		});
+
+		// Close menu when clicking outside
+		document.addEventListener('click', (event) => {
+			if (!mobileNav.contains(event.target) && !document.querySelector('.hamburger').contains(event.target)) {
+				if (mobileNav.classList.contains('active')) {
+					mobileNav.classList.remove('active');
+					overlay.classList.remove('active');
+				}
+			}
+		});
+	});
+
+
+
+
+
+	$(".custom-carousel").owlCarousel({
+		autoWidth: true,
+		loop: true
+	});
+	$(document).ready(function () {
+		$(".custom-carousel .item").click(function () {
+			$(".custom-carousel .item").not($(this)).removeClass("active");
+			$(this).toggleClass("active");
+		});
+	});
+
+
+
+
+
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	}
+
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>

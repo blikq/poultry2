@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CHICKEN</title>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			width: 100%;
+			overflow-x: hidden;
+			/* Prevent horizontal scroll */
+		}
+
+
+		body {
+			font-family: 'Barlow', sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		.preloader {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgb(255, 255, 255);
+			/* Optional: adds a white background with slight transparency */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			/* Make sure the preloader is on top of other content */
+		}
+
+		.page-content {
+			display: none;
+			/* Hide content initially */
+		}
+
+		.navbar {
+			position: sticky;
+			top: 0;
+			background-color: rgb(255, 255, 255);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: sticky;
+			padding: 10px 20px;
+			z-index: 1000;
+		}
+
+		.navbar a {
+			text-decoration: none;
+			color: #000;
+			font-size: 16px;
+			margin: 0 10px;
+		}
+
+		.navbar a:hover {
+			color: green;
+			/* #916E99 */
+		}
+
+		.logo {
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		.button {
+			border-radius: 10px;
+			padding: 10px 8px;
+			background-color: rgb(0, 128, 0);
+			/* #916E99 */
+			color: #fff;
+			border: none;
+			cursor: pointer;
+		}
+
+
+
+
+
+
+
+		/* Update this for the hamburger icon */
+		.hamburger {
+			display: none;
+			flex-direction: column;
+			cursor: pointer;
+			transition: transform 0.3s ease;
+		}
+
+		.hamburger .bar1,
+		.hamburger .bar2,
+		.hamburger .bar3 {
+			width: 25px;
+			height: 3px;
+			background-color: black;
+			margin: 4px 0;
+			transition: 0.3s;
+		}
+
+		/* Transform hamburger into an 'X' */
+		.hamburger.active .bar1 {
+			transform: rotate(-45deg) translate(-5px, 6px);
+		}
+
+		.hamburger.active .bar2 {
+			opacity: 0;
+		}
+
+		.hamburger.active .bar3 {
+			transform: rotate(45deg) translate(-5px, -6px);
+		}
+
+		/* Mobile menu styles */
+		.mobile-nav {
+			display: none;
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 250px;
+			height: 40vh;
+			/* Only apply border-radius to the left side */
+			border-top-left-radius: 15px;
+			/* Adjust as needed */
+			border-bottom-left-radius: 15px;
+			/* Adjust as needed */
+
+			background-color: rgba(255, 255, 255, 0.959);
+
+			box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+			z-index: 1001;
+			padding-top: 60px;
+			flex-direction: column;
+			transform: translateX(100%);
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.mobile-nav.active {
+			display: flex;
+			transform: translateX(0);
+		}
+
+		/* Mobile menu links styles */
+		.mobile-nav a {
+			padding: 10px 20px;
+			text-decoration: none;
+			font-size: 16px;
+			color: black;
+			display: block;
+		}
+
+		.mobile-nav a:hover {
+			background-color: #ddd;
+		}
+
+		/* Close button */
+		.close-btn {
+			font-size: 3em;
+			cursor: pointer;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			color: #000;
+		}
+
+		/* Overlay styles */
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.5);
+			display: none;
+			/* Hidden by default */
+			z-index: 1000;
+		}
+
+		/* Show overlay when menu is active */
+		.overlay.active {
+			display: block;
+		}
+
+
+
+		@media (max-width: 768px) {
+			.navbar .nav-links {
+				display: none;
+			}
+
+			.hamburger {
+				display: flex;
+			}
+
+			.home-text {
+				margin-top: 10em;
+			}
+
+		}
+
+
+
+
+		.footer {
+			background-color: #111;
+			color: #fff;
+			padding: 40px 0;
+			font-family: 'Arial', sans-serif;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 15px;
+		}
+
+		.footer-columns {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+
+		.footer-column {
+			flex: 1;
+			margin: 0 15px;
+			min-width: 250px;
+		}
+
+		.footer-column h3 {
+			font-size: 1.5em;
+			margin-bottom: 15px;
+		}
+
+		.footer-column p,
+		.footer-column ul,
+		.footer-column li {
+			font-size: 0.9em;
+			line-height: 1.6;
+			margin-bottom: 10px;
+		}
+
+		.footer-column ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		.footer-column li {
+			display: flex;
+			align-items: center;
+		}
+
+		.footer-column li .fas {
+			margin-right: 10px;
+			font-size: 1.2em;
+		}
+
+		.footer-column li .arrow {
+			color: red;
+			margin-right: 10px;
+			font-size: 1.2em;
+		}
+
+		.footer-bottom {
+			text-align: center;
+			margin-top: 30px;
+			border-top: 1px solid #333;
+			padding-top: 15px;
+			font-size: 0.85em;
+		}
+
+		.footer-bottom p {
+			margin: 0;
+		}
+
+
+		.clear {
+			clear: both;
+		}
+
+		img {
+			max-width: 100%;
+			border: 0px;
+		}
+
+		ul,
+		ol {
+			list-style: none;
+		}
+
+		a {
+			text-decoration: none;
+			color: inherit;
+			outline: none;
+			transition: all 0.4s ease-in-out;
+			-webkit-transition: all 0.4s ease-in-out;
+		}
+
+		a:focus,
+		a:active,
+		a:visited,
+		a:hover {
+			text-decoration: none;
+			outline: none;
+		}
+
+		a:hover {
+			color: #e73700;
+		}
+
+		h2 {
+			margin-bottom: 48px;
+			padding-bottom: 16px;
+			font-size: 20px;
+			line-height: 28px;
+			font-weight: 700;
+			position: relative;
+			text-transform: capitalize;
+		}
+
+		h3 {
+			margin: 0 0 10px;
+			font-size: 28px;
+			line-height: 36px;
+		}
+
+		button {
+			outline: none !important;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Preloader -->
+	<div class="preloader">
+		<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+			type="module"></script>
+
+		<dotlottie-player src="https://lottie.host/34d602d4-731c-4609-8a02-ba33839bf51f/BiL0d3KrCU.json"
+			background="transparent" speed="3" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+	</div>
+	<div class="page-content">
+		<div class="navbar">
+			<div class="logo">
+				<a href="/">
+					<img src="/static/assets/images/logo.png" alt="Chicken Logo" style="width: 5em; height: auto;">
+				</a>
+			</div>
+
+			<div class="nav-links">
+				<a href="/">Home</a>
+				<a href="about">About Us</a>
+
+
+				<a href="news">News</a>
+				<a href="blogs">Blog</a>
+
+			</div>
+			<a href="contact"><button class="button"> Contact Us</button></a>
+			<div class="hamburger" onclick="toggleMobileNav()">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+			</div>
+
+		</div>
+		<div class="mobile-nav" id="mobile-nav">
+			<div class="close-btn" onclick="toggleMobileNav()">&times;</div>
+			<nav>
+
+				<a href="/"><i class="fas fa-home"></i> Home</a>
+				<a href="about"><i class="fas fa-info-circle"></i> About Us</a>
+
+
+				<a href="news"><i class="fas fa-users"></i> News</a>
+				<a href="blogs"><i class="fas fa-users"></i> Blog</a>
+				<a href="javascript:void(0);" id="contactLink"><i class="fas fa-envelope"></i> Contact</a>
+			</nav>
+
+		</div>
+
+
+
+		<div class="contact-page">
+			<div class="container">
+				<div class="contact-header">
+					<h2>Contact Us</h2>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+				</div>
+				<div class="contact-form">
+					<form>
+						<div class="form-group">
+							<label for="name">Name *</label>
+							<input type="text" id="name" placeholder="Your Name">
+						</div>
+						<div class="form-group">
+							<label for="phone">Phone *</label>
+							<input type="text" id="phone" placeholder="Your Phone Number">
+						</div>
+						<div class="form-group">
+							<label for="email">Email *</label>
+							<input type="email" id="email" placeholder="Your Email Address">
+						</div>
+						<div class="form-group">
+							<label for="message">Message *</label>
+							<textarea id="message" placeholder="Your Message"></textarea>
+						</div>
+						<button type="submit" id="submit-btn">SUBMIT</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+		<style>
+			.contact-page {
+				padding: 50px 0;
+			}
+
+			.contact-header {
+				text-align: center;
+				margin-bottom: 40px;
+			}
+
+			.contact-header h2 {
+				font-size: 30px;
+				margin-bottom: 10px;
+			}
+
+			.contact-form {
+				max-width: 600px;
+				margin: 0 auto;
+				padding: 20px;
+				background-color: #ffffff;
+				border: 1px solid #ddd;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+
+			.form-group {
+				margin-bottom: 20px;
+			}
+
+			.form-group label {
+				display: block;
+				margin-bottom: 10px;
+			}
+
+			.form-group input,
+			.form-group textarea {
+				width: 100%;
+				padding: 10px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+			}
+
+			#submit-btn {
+				background-color: #4CAF50;
+				color: #fff;
+				padding: 10px 20px;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			#submit-btn:hover {
+				background-color: #3e8e41;
+			}
+		</style>
+
+
+
+		<footer class="footer">
+			<div class="container">
+				<div class="footer-columns">
+					<!-- About Us Section -->
+					<div class="footer-column">
+						<h3>About Us</h3>
+						<p>Nam libero tempore cum voluptate id est id, pretium semper enim. Morbi viverra congue nisi
+							vel pulvinar posuere sapien eros.</p>
+					</div>
+
+					<!-- Latest News Section -->
+					<div class="footer-column">
+						<h3>Latest News</h3>
+						<ul>
+							<li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+							<li><span class="arrow">&rarr;</span> Dolor amet sed quam vitae</li>
+							<li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+							<li><span class="arrow">&rarr;</span> Dolor amet sed quam vitae</li>
+							<li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+						</ul>
+					</div>
+
+					<!-- Contact Info Section -->
+					<div class="footer-column">
+						<h3>Contact Info</h3>
+						<ul class="contact-info">
+							<li><i class="fas fa-map-marker-alt"></i> 8088 USA, Honey block, New York City.</li>
+							<li><i class="fas fa-envelope"></i> info@example.com</li>
+							<li><i class="fas fa-phone"></i> +0900000000</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<p>&copy; 2024 Wellplus. All rights reserved</p>
+				</div>
+			</div>
+		</footer>
+
+
+
+
+
+
+
+		<div class="arrow-box" onclick="scrollToTop()">
+			<div class="arrow-up"></div>
+		</div>
+
+		<div class="whatsapp-icon">
+			<i class="fab fa-whatsapp"></i>
+		</div>
+
+</body>
+</div>
+<script>
+	// script.js
+
+	window.addEventListener('load', () => {
+		const preloader = document.querySelector('.preloader');
+		const pageContent = document.querySelector('.page-content');
+
+		if (preloader && pageContent) {
+			setTimeout(() => {
+				preloader.style.opacity = '0';
+				preloader.style.transition = 'opacity 1s ease-out'; // Smooth fade-out transition
+
+				setTimeout(() => {
+					preloader.style.display = 'none';
+					pageContent.style.display = 'block'; // Show the page content
+				}, 1000); // Match this with the fade-out duration
+			}, 2000); // Preloader duration (3000ms = 3 seconds)
+		} else {
+			console.error('Preloader or page content not found');
+		}
+	});
+
+
+
+
+
+
+</script>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const mobileNav = document.getElementById('mobile-nav');
+		const overlay = document.createElement('div');
+		overlay.classList.add('overlay');
+
+		document.body.appendChild(overlay);
+
+		function toggleMobileNav() {
+			if (mobileNav.classList.contains('active')) {
+				mobileNav.classList.remove('active');
+				overlay.classList.remove('active');
+			} else {
+				mobileNav.classList.add('active');
+				overlay.classList.add('active');
+			}
+		}
+
+		document.querySelector('.hamburger').addEventListener('click', toggleMobileNav);
+
+		document.querySelector('.close-btn').addEventListener('click', () => {
+			if (mobileNav.classList.contains('active')) {
+				mobileNav.classList.remove('active');
+				overlay.classList.remove('active');
+			}
+		});
+
+		overlay.addEventListener('click', () => {
+			if (mobileNav.classList.contains('active')) {
+				mobileNav.classList.remove('active');
+				overlay.classList.remove('active');
+			}
+		});
+
+		// Close menu when clicking outside
+		document.addEventListener('click', (event) => {
+			if (!mobileNav.contains(event.target) && !document.querySelector('.hamburger').contains(event.target)) {
+				if (mobileNav.classList.contains('active')) {
+					mobileNav.classList.remove('active');
+					overlay.classList.remove('active');
+				}
+			}
+		});
+	});
+
+
+
+
+
+
+
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	}
+
+
+
+
+
+
+</script>
+
+</body>
+
+</html>

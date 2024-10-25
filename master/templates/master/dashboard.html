@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Admin Dashboard</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f9f9f9;
+        }
+
+        .dashboard {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            background-color: #000000;
+            width: 10%;
+            padding: 15px;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin: 15px 0;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .sidebar a.active {
+            background-color: green;
+            color: #fff;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .admin-dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .article-form,
+        .article-table {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-upload {
+            border: 1px dashed #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        #editor-container {
+            height: 200px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        h1 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: green;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #save-article {
+            padding: 10px 20px;
+            background-color: green;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #save-article:hover {
+            background-color: rgb(93, 101, 82);
+
+        }
+
+        button:hover {
+            background-color: rgb(93, 101, 82);
+        }
+
+        .article-header {
+            height: 20vh;
+            background-image: url('/static/assets/images/11.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+        }
+
+        .article-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .upload-video {
+            margin-bottom: 20px;
+        }
+
+        .upload-box {
+            border: 1px dashed #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .upload-box img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .upload-box span {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .video-details {
+            margin-bottom: 20px;
+        }
+
+        .video-details input,
+        .video-details textarea {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #save-video {
+            padding: 10px 20px;
+            margin-bottom: 2em;
+            background-color: green;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #video-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #video-table th,
+        #video-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        #video-table th {
+            background-color: #f0f0f0;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            position: relative;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <nav class="sidebar" style="position: sticky;">
+            <ul id="nav-menu" style="margin-top: 2em;">
+                <div class="logo">
+                    <a href="">
+                        <img src="/static/assets/images/logo.png" alt="Chicken Logo" style="width: 5em; height: auto;">
+                    </a>
+                </div>
+                <li><a href="#" class="nav-link" data-section="dashboard" style="margin-top: 1em;">News</a></li>
+                <li><a href="#" class="nav-link" data-section="orders">Blog </a></li>
+                {% comment %} <li><a href="javascript:void(0);" onclick="openLogoutPopup()" class="nav-link"> <i
+                            class="fas fa-sign-out-alt" style="font-size: 1em;"></i> Log Out</a></li> {% endcomment %}
+
+                <li><a href="/master/logout" class="nav-link"> <i class="fas fa-sign-out-alt" style="font-size: 1em;"></i> Log Out</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div id="dashboard" class="section">
+                <header class="article-header">
+                    <h1 style="color: #ffffff;">Admin / News</h1>
+                </header>
+                <div class="admin-dashboard">
+                    <div class="article-form">
+                        <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            <h1>Create New Article</h1>
+                            <input type="text" id="author" placeholder="Author" name="author" required>
+                            <input type="text" id="title" placeholder="Title" name="title" required>
+                            <div class="image-upload">
+                                <p>Drag and drop or choose an image</p>
+                                <input type="file" id="image" name="images" required>
+                            </div>
+                            <div id="editor-container"></div>
+                            <input type="text" name="article" id="tempnews" style="display: none" required> 
+                            <input type="submit" id="save-article" name="news-submit" value="Save Article" required>
+                        </form>
+                    </div>
+                    <div class="article-table">
+                        <h1>Articles</h1>
+                        {% comment %} <p>{{data.blogs[0].id}}</p> {% endcomment %}
+                        {% comment %} {% for blog in blogs %}
+                            {{ blog.id }}
+                        {% endfor %} {% endcomment %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    {% comment %} <th>S/N</th> {% endcomment %}
+                                    <th>Image</th>
+                                    <th>Article</th>
+                                    <th>Author</th>
+                                    <th>Title</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="article-list">
+                                <!-- Articles will be listed here -->
+                                {% for news in newss %}
+                                <tr>
+                                    {% comment %} <td>{{blog.id}}</td> {% endcomment %}
+                                    <td>{{news.images}}</td>
+                                    <td>{{news.article}}</td>
+                                    <td>{{news.author}}</td>
+                                    <td>{{news.title}}</td>
+                                    <input type="text" value="{{news.id}}" id="news-del" style="display:none">
+                                    <td> <a href="/blog/{{news.id}}/edit"><button>Edit</button></a> <button onclick="confirmDelete(this)">Delete</button> </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="orders" class="section" style="display:none;">
+                <header class="article-header">
+                    <h1 style="color: #ffffff;">Admin / Blog</h1>
+                </header>
+                <div class="video-admin">
+                    <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}    
+                        <div class="upload-video">
+                            <div class="upload-box">
+                                <span>Upload Video</span>
+                                <input type="file" id="video-upload" accept="video/*" name="video" required>
+                            </div>
+                        </div>
+                        <div class="video-details">
+                            <input type="text" id="video-title" placeholder="Video Title" name="title" required>
+                            <!-- <textarea id="video-description" rows="4" placeholder="Video Description"></textarea> -->
+                            <div id="video-description"></div>
+                            <br>
+                            <input type="text" id="real-des" name="description" style="display: none;">
+                            <input type="submit" id="save-video" name="blog-submit" value="Save Video" required>
+                        </div>
+                    </form>
+                    <div class="video-table">
+                        <table id="video-table">
+                            <thead>
+                                <tr>
+                                    {% comment %} <th>S/N</th> {% endcomment %}
+                                    <th>Video</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="video-list">
+                                <!-- Videos will be listed here -->
+                                {% for blog in blogs %}
+                                    <tr>
+                                        {% comment %} <td>{{blog.id}}</td> {% endcomment %}
+                                        <td>{{blog.video}}</td>
+                                        <td>{{blog.title}}</td>
+                                        <td>{{blog.description}}</td>
+                                        <input type="text" value="{{blog.id}}" id="blog-del" style="display:none">
+                                        <td> <button href"/blog/{{blog.id}}/edit">Edit</button> <button onclick="confirmDeleteVideo(this)">Delete</button> </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Popup -->
+    <div id="confirm-delete-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeConfirmDeletePopup()">&times;</span>
+            <p>Are you sure you want to delete this article?</p>
+            <button id="confirm-delete-button">Delete</button>
+            <button onclick="closeConfirmDeletePopup()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Logout Popup -->
+    <div id="logout-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeLogoutPopup()">&times;</span>
+            <p>Are you sure you want to log out?</p>
+            <a href=""> <button onclick="logout()">Log Out</button></a>
+            <button onclick="closeLogoutPopup()">Cancel</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        // Initialize Quill editor for articles
+        var quill = new Quill('#editor-container', {
+            theme: 'snow'
+        });
+
+        // Handle save article
+        document.getElementById('save-article').addEventListener('click', function () {
+            var content = quill.root.innerHTML;
+            document.getElementById('tempnews').value = content;
+            var author = document.getElementById('author').value;
+            var title = document.getElementById('title').value;
+            var image = document.getElementById('image').files[0];
+
+            /* if (author && title && content) {
+                var table = document.getElementById('article-list');
+                var row = table.insertRow();
+                row.insertCell(0).innerText = table.rows.length;
+                row.insertCell(1).innerText = "Image";
+                row.insertCell(2).innerText = content;
+                row.insertCell(3).innerText = author;
+                row.insertCell(4).innerText = title;
+                row.insertCell(5).innerHTML = `<button onclick="editArticle(this)">Edit</button> <button onclick="confirmDelete(this)">Delete</button>`;
+
+                // document.getElementById('author').value = '';
+                // document.getElementById('title').value = '';
+                // quill.root.innerHTML = '';
+                // document.getElementById('image').value = '';
+            } else {
+                alert('Please fill all fields.');
+            } */
+        });
+        
+
+
+        // Handle edit article
+        function editArticle(button) {
+            var row = button.parentElement.parentElement;
+            var content = row.cells[2].innerText;
+            var author = row.cells[3].innerText;
+            var title = row.cells[4].innerText;
+
+            document.getElementById('author').value = author;
+            document.getElementById('title').value = title;
+            quill.root.innerHTML = content;
+
+            // Remove the row
+            row.remove();
+        }
+
+        // Handle confirm delete
+        function confirmDelete(button) {
+            document.getElementById('confirm-delete-popup').style.display = 'block';
+            document.getElementById('confirm-delete-button').onclick = function () {
+                id_del = document.getElementById("news-del").value
+                console.log(id_del)
+                postData("http://localhost:8000/api/delete", id_del, "news")
+            };
+        }
+
+        function closeConfirmDeletePopup() {
+            document.getElementById('confirm-delete-popup').style.display = 'none';
+        }
+
+        // Handle logout popup
+        function openLogoutPopup() {
+            document.getElementById('logout-popup').style.display = 'block';
+        }
+
+        function closeLogoutPopup() {
+            document.getElementById('logout-popup').style.display = 'none';
+        }
+
+        function logout() {
+            // Add your logout logic here
+            closeLogoutPopup();
+        }
+
+        // Handle section display
+        var navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(function (link) {
+            link.addEventListener('click', function () {
+                var section = this.getAttribute('data-section');
+                document.querySelectorAll('.section').forEach(function (sec) {
+                    sec.style.display = 'none';
+                });
+                document.getElementById(section).style.display = 'block';
+
+                navLinks.forEach(function (lnk) {
+                    lnk.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // Initialize Quill editor for video description
+        var quillVideo = new Quill('#video-description', {
+            theme: 'snow'
+        });
+
+        // Handle save video
+        document.getElementById('save-video').addEventListener('click', function () {
+            var videoTitle = document.getElementById('video-title').value;
+            var videoDescription = quillVideo.root.innerHTML;
+            document.getElementById('real-des').value = videoDescription;
+            // var videoFile = document.getElementById('video-upload').files[0];
+
+            /* if (videoTitle && videoDescription && videoFile) {
+                var table = document.getElementById('video-list');
+                var row = table.insertRow();
+                row.insertCell(0).innerHTML = `<video width="320" height="240" controls>
+                                                  <source src="${URL.createObjectURL(videoFile)}" type="${videoFile.type}">
+                                                  Your browser does not support the video tag.
+                                                </video>`;
+                row.insertCell(1).innerText = videoTitle;
+                row.insertCell(2).innerText = videoDescription;
+                row.insertCell(3).innerHTML = `<button onclick="editVideo(this)">Edit</button> <button onclick="confirmDeleteVideo(this)">Delete</button>`;
+
+                document.getElementById('video-title').value = '';
+                quillVideo.root.innerHTML = '';
+                document.getElementById('video-upload').value = '';
+            } else {
+                alert('Please fill all fields.');
+            } */
+        });
+
+        // Handle edit video
+        function editVideo(button) {
+            var row = button.parentElement.parentElement;
+            var title = row.cells[1].innerText;
+            var description = row.cells[2].innerText;
+
+            document.getElementById('video-title').value = title;
+            quillVideo.root.innerHTML = description;
+
+            // Remove the row
+            row.remove();
+        }
+
+        // Handle confirm delete video
+        function confirmDeleteVideo(button) {
+            document.getElementById('confirm-delete-popup').style.display = 'block';
+            document.getElementById('confirm-delete-button').onclick = function () {
+                id_del = document.getElementById("blog-del").value
+                postData("http://localhost:8000/api/delete", id_del, "blog")
+            };
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+
+        function postData(url, id_, model) {
+            fetch(url, {
+                method: 'POST', // Specify the method as POST
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),  // Include CSRF token if needed
+                    'Access-Control-Allow-Origin': '*',
+                    'model': model,
+                    'ido': id_,
+                },
+                // body: JSON.stringify(data), // Convert the data to JSON
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                // return response.json(); // Parse the response as JSON
+                location.reload();
+            })
+            .then(data => {
+                console.log('Success:', data); // Handle the JSON data
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+    </script>
+</body>
+
+</html>

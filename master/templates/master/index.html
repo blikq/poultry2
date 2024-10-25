@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHICKEN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(255, 255, 255);
+            /* Optional: adds a white background with slight transparency */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            /* Make sure the preloader is on top of other content */
+        }
+
+        .page-content {
+            display: none;
+            /* Hide content initially */
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            padding: 10px 20px;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #000;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+
+        .navbar a:hover {
+            color: green;
+            /* #916E99 */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .button {
+            border-radius: 10px;
+            padding: 10px 8px;
+            background-color: rgb(0, 128, 0);
+            /* #916E99 */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* home section start */
+        .home-section {
+            position: relative;
+            overflow: hidden;
+            height: 80vh;
+            width: 100%;
+        }
+
+        .home-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #00000000;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .home-section .home-bg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 80%;
+            width: 100%;
+            background-image: url('/static/assets/images/heroo.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            animation: zoomOut 20s ease infinite;
+            /* Corrected animation name */
+        }
+
+        @keyframes zoomOut {
+
+            /* Corrected to match the animation name */
+            0% {
+                transform: scale(1.2);
+                /* Start zoomed in */
+            }
+
+            50% {
+                transform: scale(1);
+                /* Zoom out to original size */
+            }
+
+            100% {
+                transform: scale(1.2);
+                /* Zoom in again to create a loop */
+            }
+        }
+
+
+        .home-section {
+            position: relative;
+            padding: 80px 0;
+            min-height: 100vh;
+            /* Ensures the section takes up the full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Centers the content vertically */
+            text-align: center;
+        }
+
+        .home-text {
+            max-width: 500px;
+            width: 100%;
+            margin-top: -10em !important;
+            margin-bottom: 5em;
+            color: #fff;
+            /* Ensure the text color contrasts well with the background image */
+        }
+
+        .home-text h1 {
+            font-size: 4em;
+            line-height: 75px;
+            margin: 0 0 5px;
+        }
+
+        .home-text p {
+            margin: 0 0 30px;
+        }
+
+
+
+
+
+
+        /* Update this for the hamburger icon */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger .bar1,
+        .hamburger .bar2,
+        .hamburger .bar3 {
+            width: 25px;
+            height: 3px;
+            background-color: black;
+            margin: 4px 0;
+            transition: 0.3s;
+        }
+
+        /* Transform hamburger into an 'X' */
+        .hamburger.active .bar1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active .bar2 {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Mobile menu styles */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 40vh;
+            /* Only apply border-radius to the left side */
+            border-top-left-radius: 15px;
+            /* Adjust as needed */
+            border-bottom-left-radius: 15px;
+            /* Adjust as needed */
+
+            background-color: rgba(255, 255, 255, 0.959);
+
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            padding-top: 60px;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        /* Mobile menu links styles */
+        .mobile-nav a {
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            color: black;
+            display: block;
+        }
+
+        .mobile-nav a:hover {
+            background-color: #ddd;
+        }
+
+        /* Close button */
+        .close-btn {
+            font-size: 3em;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #000;
+        }
+
+        /* Overlay styles */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            /* Hidden by default */
+            z-index: 1000;
+        }
+
+        /* Show overlay when menu is active */
+        .overlay.active {
+            display: block;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .home-text {
+                margin-top: 10em;
+            }
+
+        }
+
+        .about-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px;
+            background-color: white;
+        }
+
+        .about-text {
+            position: relative;
+            flex: 1;
+            max-width: 50%;
+            padding-right: 20px;
+
+        }
+
+        .about-text h1 {
+            font-size: 95px;
+            color: #e4e4e4;
+            opacity: 0.7;
+            font-family: 'Barlow Condensed', sans-serif;
+            margin: 0;
+
+        }
+
+        .about-text h2 {
+            font-size: 26px;
+            color: green;
+            font-family: 'Barlow Semi Condensed', sans-serif;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            margin: 0;
+
+        }
+
+        .about-text p {
+            margin: 50px 0 20px;
+            font-size: 16px;
+            color: #000;
+        }
+
+        .about-button {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 13px;
+            padding: 10px 10px;
+            background-color: #000000;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .about-button:hover {
+            background-color: green;
+        }
+
+        .about-button i {
+            margin-left: 10px;
+        }
+
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+            position: relative;
+
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .overlay-image {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            /* Adjust the width */
+
+            height: auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-text {
+                padding-bottom: 2em;
+            }
+
+            .about-image {
+                text-align: center;
+            }
+        }
+
+
+
+
+
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+            }
+
+            .about-text {
+                max-width: 100%;
+                padding-right: 0;
+
+            }
+
+            .about-text h1 {
+                font-size: 48px;
+            }
+
+            .about-text h2 {
+                font-size: 20px;
+                top: 10px;
+
+            }
+
+            .about-image {
+                max-width: 100%;
+                margin-top: 20px;
+            }
+        }
+
+
+
+
+
+
+
+
+        .image-row {
+            display: flex;
+            justify-content: center;
+            gap: 1px;
+
+        }
+
+        .image-row .image-containers {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .image-row img {
+            width: 100%;
+
+            transition: transform 0.3s;
+        }
+
+        .image-row .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+
+
+
+        .image-row .image-containers:hover img {
+            transform: translateY(-100%);
+        }
+
+        .image-row .image-containers:hover .image-overlay {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .image-row {
+                flex-direction: column;
+            }
+        }
+
+
+
+        .arrow-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: green;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .arrow-up {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid white;
+        }
+
+
+        .whatsapp-icon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 3em;
+            height: 3em;
+            background-color: #1b7d12;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .whatsapp-icon i {
+            color: white;
+            font-size: 2em;
+        }
+
+        .procedures-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .text-container {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .imagea-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .imagea-container video {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            border-radius: 10px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.7em;
+            margin-right: 10px;
+        }
+
+        .book-appointment {
+            background-color: green;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .ask-question {
+            background-color: green;
+            color: black;
+            border-radius: 10px;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 1024px) {
+            .procedures-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .text-container {
+                margin: 0 !important;
+            }
+
+            .imagea-container {
+                margin-top: 20px;
+            }
+        }
+
+
+
+        .wellplus-experts {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 2em;
+            border: 1px solid #ccc;
+            padding: 2em;
+            background-color: #f9f9f9;
+        }
+
+        .bio-container {
+            flex: 1;
+            margin-right: 2em;
+        }
+
+        h6 {
+            font-size: 1em;
+            color: #555;
+
+        }
+
+        #expert-name {
+            font-size: 2.5em;
+
+        }
+
+        #expert-bio {
+            font-size: 1em;
+
+        }
+
+        .view-bio {
+            background-color: green;
+            /* Change to an actual metallic #d4af37 color */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .image-container {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+
+        }
+
+
+
+
+
+
+
+
+
+        .carousel-controls {
+            position: absolute;
+            bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .prev,
+        .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            margin: 0 5px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+
+
+        @media (max-width: 768px) {
+            .wellplus-experts {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .bio-container {
+                margin-right: 0;
+                margin-bottom: 2em;
+            }
+
+            .image-container img {
+                width: 12em !important;
+                height: 10em !important;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+        /* Button styling */
+        .learn-more-btn {
+            background-color: rgb(0, 0, 0);
+            color: white;
+            border: none;
+            padding: 0.75em 1.5em;
+            font-size: 1em;
+            border-radius: 13px;
+            cursor: pointer;
+        }
+
+        .learn-more-btn:hover {
+            background-color: green;
+        }
+
+
+
+
+
+
+
+        .image-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            justify-content: center;
+            /* Center items */
+        }
+
+        .image-grid .image-item {
+            position: relative;
+            width: calc(100% / 3);
+            /* Three images per row on larger screens */
+            padding-bottom: calc(100% / 3);
+            /* Maintain aspect ratio */
+        }
+
+        .image-grid .image-item img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-grid .image-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            height: 20%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            /* Aligns content to the bottom */
+            align-items: flex-start;
+            /* Aligns content to the left */
+            padding: 10px;
+            /* Optional: adds some padding around the text */
+            background-color: rgba(0, 0, 0, 0.381);
+
+        }
+
+
+
+        .image-grid .image-item .overlay p {
+            color: #fff;
+            font-size: 1.2em;
+            margin: 0;
+        }
+
+
+
+
+
+        @media (max-width: 1024px) {
+            .image-grid .image-item {
+                width: 100%;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .image-grid .image-item {
+                width: 100%;
+                /* One image per row on smaller screens */
+                padding-bottom: 100%;
+                /* Maintain aspect ratio */
+            }
+
+
+        }
+
+        .footer {
+            background-color: #111;
+            color: #fff;
+            padding: 40px 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-columns {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            flex: 1;
+            margin: 0 15px;
+            min-width: 250px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .footer-column p,
+        .footer-column ul,
+        .footer-column li {
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column li {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-column li .fas {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .footer-column li .arrow {
+            color: red;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+            font-size: 0.85em;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+        }
+
+
+        .clear {
+            clear: both;
+        }
+
+        img {
+            max-width: 100%;
+            border: 0px;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            outline: none;
+            transition: all 0.4s ease-in-out;
+            -webkit-transition: all 0.4s ease-in-out;
+        }
+
+        a:focus,
+        a:active,
+        a:visited,
+        a:hover {
+            text-decoration: none;
+            outline: none;
+        }
+
+        a:hover {
+            color: #e73700;
+        }
+
+        h2 {
+            margin-bottom: 48px;
+            padding-bottom: 16px;
+            font-size: 20px;
+            line-height: 28px;
+            font-weight: 700;
+            position: relative;
+            text-transform: capitalize;
+        }
+
+        h3 {
+            margin: 0 0 10px;
+            font-size: 28px;
+            line-height: 36px;
+        }
+
+        button {
+            outline: none !important;
+        }
+
+        /******* Common Element CSS End *********/
+
+        /* -------- title style ------- */
+        .line-title {
+            position: relative;
+            width: 400px;
+        }
+
+        .line-title::before,
+        .line-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .line-title::before {
+            width: 100%;
+            background: #f2f2f2;
+        }
+
+        .line-title::after {
+            width: 32px;
+            background: #e73700;
+        }
+
+        /******* Middle section CSS Start ******/
+        /* -------- Landing page ------- */
+        .game-section {
+            padding: 60px 50px;
+        }
+
+        .game-section .owl-stage {
+            margin: 15px 0;
+            display: flex;
+            display: -webkit-flex;
+        }
+
+        .game-section .item {
+            margin: 0 15px 60px;
+            width: 320px;
+            height: 400px;
+            display: flex;
+            display: -webkit-flex;
+            align-items: flex-end;
+            -webkit-align-items: flex-end;
+            background: #343434 no-repeat center center / cover;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease-in-out;
+            -webkit-transition: all 0.4s ease-in-out;
+            cursor: pointer;
+        }
+
+        .game-section .item.active {
+            width: 500px;
+            box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
+            -webkit-box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .game-section .item:after {
+            content: "";
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+        }
+
+        .game-section .item-desc {
+            padding: 0 24px 12px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transform: translateY(calc(100% - 54px));
+            -webkit-transform: translateY(calc(100% - 54px));
+            transition: all 0.4s ease-in-out;
+            -webkit-transition: all 0.4s ease-in-out;
+        }
+
+        .game-section .item.active .item-desc {
+            transform: none;
+            -webkit-transform: none;
+        }
+
+        .game-section .item-desc p {
+            opacity: 0;
+            -webkit-transform: translateY(32px);
+            transform: translateY(32px);
+            transition: all 0.4s ease-in-out 0.2s;
+            -webkit-transition: all 0.4s ease-in-out 0.2s;
+        }
+
+        .game-section .item.active .item-desc p {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+
+        .game-section .owl-theme.custom-carousel .owl-dots {
+            margin-top: -20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /******** Middle section CSS End *******/
+
+        /***** responsive css Start ******/
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            h2 {
+                margin-bottom: 32px;
+            }
+
+            h3 {
+                margin: 0 0 8px;
+                font-size: 24px;
+                line-height: 32px;
+            }
+
+            /* -------- Landing page ------- */
+            .game-section {
+                padding: 50px 30px;
+            }
+
+            .game-section .item {
+                margin: 0 12px 60px;
+                width: 260px;
+                height: 360px;
+            }
+
+            .game-section .item.active {
+                width: 400px;
+            }
+
+            .game-section .item-desc {
+                transform: translateY(calc(100% - 46px));
+                -webkit-transform: translateY(calc(100% - 46px));
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            h2 {
+                margin-bottom: 32px;
+            }
+
+            h3 {
+                margin: 0 0 8px;
+                font-size: 24px;
+                line-height: 32px;
+            }
+
+            .line-title {
+                width: 330px;
+            }
+
+            /* -------- Landing page ------- */
+            .game-section {
+                padding: 50px 30px 40px;
+            }
+
+            .game-section .item {
+                margin: 0 12px 60px;
+                width: 240px;
+                height: 330px;
+            }
+
+            .game-section .item.active {
+                width: 360px;
+            }
+
+            .game-section .item-desc {
+                transform: translateY(calc(100% - 42px));
+                -webkit-transform: translateY(calc(100% - 42px));
+            }
+        }
+
+        @media (max-width: 767px) {
+            body {
+                font-size: 14px;
+            }
+
+            h2 {
+                margin-bottom: 20px;
+            }
+
+            h3 {
+                margin: 0 0 8px;
+                font-size: 19px;
+                line-height: 24px;
+            }
+
+            .line-title {
+                width: 250px;
+            }
+
+            /* -------- Landing page ------- */
+            .game-section {
+                padding: 30px 15px 20px;
+            }
+
+            .game-section .item {
+                margin: 0 10px 40px;
+                width: 200px;
+                height: 280px;
+            }
+
+            .game-section .item.active {
+                width: 270px;
+                box-shadow: 6px 10px 10px rgba(0, 0, 0, 0.25);
+                -webkit-box-shadow: 6px 10px 10px rgba(0, 0, 0, 0.25);
+            }
+
+            .game-section .item-desc {
+                padding: 0 14px 5px;
+                transform: translateY(calc(100% - 42px));
+                -webkit-transform: translateY(calc(100% - 42px));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+            type="module"></script>
+
+        <dotlottie-player src="https://lottie.host/34d602d4-731c-4609-8a02-ba33839bf51f/BiL0d3KrCU.json"
+            background="transparent" speed="3" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+    </div>
+    <div class="page-content">
+        <div class="navbar">
+            <div class="logo">
+                <a href="/">
+                    <img src="/static/assets/images/logo.png" alt="Chicken Logo" style="width: 5em; height: auto;">
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="about">About Us</a>
+
+
+                <a href="news">News</a>
+                <a href="blogs">Blog</a>
+
+            </div>
+            <a href="contact"><button class="button"> Contact Us</button></a>
+            <div class="hamburger" onclick="toggleMobileNav()">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+
+        </div>
+        <div class="mobile-nav" id="mobile-nav">
+            <div class="close-btn" onclick="toggleMobileNav()">&times;</div>
+            <nav>
+
+                <a href="/"><i class="fas fa-home"></i> Home</a>
+                <a href="about"><i class="fas fa-info-circle"></i> About Us</a>
+
+
+                <a href="news"><i class="fas fa-users"></i> News</a>
+                <a href="blogs"><i class="fas fa-users"></i> Blog</a>
+                <a href="javascript:void(0);" id="contactLink"><i class="fas fa-envelope"></i> Contact</a>
+            </nav>
+
+        </div>
+
+        <!-- home section start -->
+        <div class="home-section" id="home">
+            <div class="home-bg"></div>
+            <div class="container">
+                <div class="row min-vh-100 align-items-center">
+                    <div class="home-text">
+
+                        <h1 style="color: white;">CHICKEN FARM</h1>
+                        <p style="color: white;"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi
+                            asperiores veniam odio, facilis at ipsam est alias aliquam deleniti similique voluptatem
+                            illo. Earum totam repellat molestiae neque in, ad expedita. </p>
+                        <button class="learn-more-btn">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <div class="about-text">
+                <h1>About</h1>
+                <h2 style="margin-top: 3em;">Chicken Farm</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula tortor sed nisl viverra, a
+                    fermentum eros gravida. Phasellus a nisl vehicula, lacinia erat ut, auctor augue.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula tortor sed nisl viverra, a
+                    fermentum eros gravida. Phasellus a nisl vehicula, lacinia erat ut, auctor augue.</p>
+
+                <a href="#" class="about-button"> Learn More<i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="about-image">
+                <img src="/static/assets/images/pexels-chanita-sykes-417447-1094544.jpg" alt="Roosters">
+                <img src="/static/assets/images/about.png" class="overlay-image">
+
+            </div>
+        </div>
+
+
+
+
+        <div class="image-row ">
+            <div class="image-containers">
+                <img src="/static/assets/images/heroo.jpg" alt="Image 1">
+                <div class="image-overlay" style="font-size: 0.8em; font-style: italic; "><b
+                        style="margin: 1.5em;">Lorem, ipsum
+                        dolor sit amet
+                        consectetur adipisicing elit. Dolore saepe
+                        quaerat
+                        officiis obcaecati, fugit impedit? Nostrum explicabo atque, saepe quos ratione beatae sunt
+                        facere a
+                        iste
+                        aliquam reprehenderit totam fuga.</b></div>
+            </div>
+            <div class="image-containers">
+                <img src="/static/assets/images/heroo.jpg" alt="Image 2">
+                <div class="image-overlay" style="font-size: 0.8em; font-style: italic; "><b
+                        style="margin: 1.5em;">Lorem, ipsum
+                        dolor sit amet
+                        consectetur adipisicing elit. Dolore saepe
+                        quaerat
+                        officiis obcaecati, fugit impedit? Nostrum explicabo atque, saepe quos ratione beatae sunt
+                        facere a
+                        iste
+                        aliquam reprehenderit totam fuga.</b></div>
+            </div>
+            <div class="image-containers">
+
+                <img src="/static/assets/images/heroo.jpg" alt="Image 3">
+                <div class="image-overlay" style="font-size: 0.8em; font-style: italic; "><b
+                        style="margin: 1.5em;">Lorem, ipsum
+                        dolor sit amet
+                        consectetur adipisicing elit. Dolore saepe
+                        quaerat
+                        officiis obcaecati, fugit impedit? Nostrum explicabo atque, saepe quos ratione beatae sunt
+                        facere a
+                        iste
+                        aliquam reprehenderit totam fuga.</b></div>
+            </div>
+        </div>
+
+        <style>
+            .text-container h1 {
+                font-size: 95px;
+                color: #e4e4e4;
+                opacity: 0.7;
+                font-family: 'Barlow Condensed', sans-serif;
+                margin: 0;
+
+            }
+        </style>
+        <section class="procedures-section">
+            <div class="text-container">
+                <h1>CHICKEN</h1>
+
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur autem, voluptatum est debitis
+                    enim
+                    id aut saepe earum. Ad voluptatem eaque eos doloribus aperiam quam, unde fugit voluptatum modi aut.
+                </p>
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae accusantium totam eveniet vitae
+                    qui
+                    itaque minima quod ea inventore, officiis suscipit, illo culpa maiores veniam repellat iusto?
+                    Blanditiis, alias reiciendis?
+                </p>
+                <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut nulla eaque amet error soluta ex
+                    excepturi
+                    adipisci in ad, temporibus explicabo at nisi sit! Doloremque odit perferendis similique facilis
+                    cupiditate?
+                </p>
+                <div class="buttons">
+                    <button class="book-appointment">Find Out More</button>
+                    <button class="ask-question">Buy A Chicken</button>
+                </div>
+            </div>
+            <div class="imagea-container">
+                <video autoplay muted loop playsinline>
+                    <source src="/static/assets/images/chicken.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+
+
+
+        <section class="wellplus-experts">
+            <div class="bio-container">
+                <h6>Farm Experts</h6>
+                <h1 id="expert-name">JOHN DOE</h1>
+                <p id="expert-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non risus nec nisi
+                    volutpat fermentum. Nulla facilisi.</p>
+                <button class="view-bio">View Bio</button>
+            </div>
+            <div class="image-container">
+                <img id="expert-image" src="/static/assets/images/pexels-chanita-sykes-417447-1094544.jpg" alt="Expert Image">
+                <div class="carousel-controls">
+                    <button class="prev" onclick="prevBio()">Prev</button>
+                    <button class="next" onclick="nextBio()">Next</button>
+                </div>
+            </div>
+        </section>
+
+
+
+        <div class="image-grid ">
+            <!-- Image 1 -->
+            <div class="image-item ">
+                <img src="/static/assets/images/hero3.jpg" alt="Image 1">
+                <div class="overlay">
+
+                    <p>hiiiii</p>
+                    <p>lorem ipsum</p>
+                </div>
+            </div>
+
+            <div class="image-item ">
+                <img src="/static/assets/images/pexels-rattasat-1453152-2804327.jpg" alt="Image 1">
+                <div class="overlay">
+
+                    <p>hiiiii</p>
+                    <p>lorem ipsum</p>
+                </div>
+            </div>
+
+            <!-- Image 2 -->
+            <div class="image-item ">
+                <img src="/static/assets/images/heroo.jpg" alt="Image 2">
+                <div class="overlay">
+
+                    <p>hiiiii</p>
+                    <p>lorem ipsum</p>
+                </div>
+            </div>
+
+            <div class="image-item ">
+                <img src="/static/assets/images/hero3.jpg" alt="Image 2">
+                <div class="overlay">
+
+                    <p>hiiiii</p>
+                    <p>lorem ipsum</p>
+                </div>
+            </div>
+
+
+            <div class="image-item ">
+                <img src="/static/assets/images/hero2.jpg" alt="Image 2">
+                <div class="overlay">
+
+                    <p>hiiiii</p>
+                    <p>lorem ipsum</p>
+                </div>
+            </div>
+
+            <div class="image-item ">
+                <img src="/static/assets/images/hero3.jpg" alt="Image 2">
+                <div class="overlay">
+
+                    <p>hiiiii</p>
+                    <p>lorem ipsum</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <section class="game-section">
+            <h2 class="line-title">Trending News</h2>
+            <div class="owl-carousel custom-carousel owl-theme">
+                <div class="item active" style="background-image: url('/static/assets/images/hero2.jpg');">
+                    <div class="item-desc">
+                        <h3>Chicken</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde quis iure, facere
+                            mollitia
+                            repellat similique sint cumque deserunt rerum ullam! Suscipit hic autem quidem
+                            omnis, odio
+                            natus repellendus numquam sunt!.</p>
+                    </div>
+                </div>
+                <div class="item" style="background-image: url('/static/assets/images/hero2.jpg');">
+                    <div class="item-desc">
+                        <h3>Goat</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate voluptate
+                            voluptatibus
+                            quis laudantium nemo aut, explicabo eius voluptatem voluptates officiis accusantium
+                            dolores
+                            voluptatum dicta obcaecati, optio nihil. Perspiciatis, odio dicta!.</p>
+                    </div>
+                </div>
+                <div class="item" style="background-image: url('/static/assets/images/heroo.jpg');">
+                    <div class="item-desc">
+                        <h3>Ram</h3>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia necessitatibus
+                            beatae,
+                            alias natus ad rem voluptas, consequatur sequi non minus asperiores tempore quidem
+                            quis
+                            pariatur, numquam quasi accusantium nobis iste.</p>
+                    </div>
+                </div>
+                <div class="item" style="background-image: url('/static/assets/images/heroo.jpg');">
+                    <div class="item-desc">
+                        <h3>Pig</h3>
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error ea omnis repellat
+                            doloremque,
+                            esse, aliquam at architecto soluta quisquam amet et ratione fuga quibusdam
+                            veritatis, ex
+                            sunt voluptate alias inventore.
+                    </div>
+                </div>
+                <div class="item" style="background-image: url('/static/assets/images/hero2.jpg');">
+                    <div class="item-desc">
+                        <h3>Camel</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse molestias voluptates
+                            tempora
+                            impedit eveniet! Commodi molestiae ab nisi dolore voluptatibus mollitia, quibusdam
+                            doloremque in maxime pariatur nihil eveniet a aperiam.</p>
+                    </div>
+                </div>
+                <div class="item" style="background-image: url('/static/assets/images/hero3.jpg');">
+                    <div class="item-desc">
+                        <h3>Poultry</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto id qui earum
+                            nobis
+                            blanditiis, quas quae sint nam suscipit adipisci. Dignissimos vel, ullam quas
+                            adipisci
+                            aliquam culpa fugiat inventore! Dolores.</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section>
+
+    <div class="contact-banner">
+        <div class="contact-content">
+            <h2>Stay Updated!</h2>
+            <p>Subscribe to our newsletter for the latest updates.</p>
+            <button id="contactButton">Contact Us</button>
+        </div>
+    </div>
+
+    <div class="contact-form-menu" id="contactFormMenu">
+        <div class="contact-form-container">
+            <h2>Have you any question?</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, ratione! Laboriosam est, assumenda.
+                Perferendis, quo alias quaerat aliquid. Corporis ipsum minus voluptate? Dolore, esse natus!</p>
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Name" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="phone" name="phone" placeholder="Phone">
+                    <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                </div>
+                <textarea id="message" name="message" placeholder="Message" rows="5" required></textarea>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <style>
+        .contact-banner {
+            background-image: url('/static/assets/images/hero2.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 70px 0;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .contact-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .contact-content p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        #contactButton {
+            background-color: green;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #contactButton:hover {
+            background-color: rgb(88, 104, 88);
+        }
+
+        .contact-form-menu {
+            position: fixed;
+            top: 2em;
+            right: -70%;
+            /* Move it off-screen initially */
+            width: 50%;
+            height: 100%;
+            transition: right 0.5s ease;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0);
+            /* Ensure it's visible */
+            overflow-y: auto;
+        }
+
+        .contact-form-menu.active {
+            right: 0;
+            /* Slide into view */
+        }
+
+        .contact-form-container {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form-container h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .contact-form-container p {
+            font-size: 1em;
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        .submit-button {
+            background-color: green;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .submit-button:hover {
+            background-color: rgb(114, 191, 14);
+        }
+    </style>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <!-- About Us Section -->
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <p>Nam libero tempore cum voluptate id est id, pretium semper enim. Morbi viverra congue nisi
+                        vel pulvinar posuere sapien eros.</p>
+                </div>
+
+                <!-- Latest News Section -->
+                <div class="footer-column">
+                    <h3>Latest News</h3>
+                    <ul>
+                        <li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+                        <li><span class="arrow">&rarr;</span> Dolor amet sed quam vitae</li>
+                        <li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+                        <li><span class="arrow">&rarr;</span> Dolor amet sed quam vitae</li>
+                        <li><span class="arrow">&rarr;</span> Lorem ipsum neque, vulputate</li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info Section -->
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 8088 USA, Honey block, New York City.</li>
+                        <li><i class="fas fa-envelope"></i> info@example.com</li>
+                        <li><i class="fas fa-phone"></i> +0900000000</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <p>&copy; 2024 Wellplus. All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <div class="arrow-box" onclick="scrollToTop()">
+        <div class="arrow-up"></div>
+    </div>
+
+    <div class="whatsapp-icon">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+</body>
+</div>
+<script>
+    // script.js
+
+    window.addEventListener('load', () => {
+        const preloader = document.querySelector('.preloader');
+        const pageContent = document.querySelector('.page-content');
+
+        if (preloader && pageContent) {
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.transition = 'opacity 1s ease-out'; // Smooth fade-out transition
+
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    pageContent.style.display = 'block'; // Show the page content
+                }, 1000); // Match this with the fade-out duration
+            }, 2000); // Preloader duration (3000ms = 3 seconds)
+        } else {
+            console.error('Preloader or page content not found');
+        }
+    });
+
+
+
+
+
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileNav = document.getElementById('mobile-nav');
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+
+        document.body.appendChild(overlay);
+
+        function toggleMobileNav() {
+            if (mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+            } else {
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+            }
+        }
+
+        document.querySelector('.hamburger').addEventListener('click', toggleMobileNav);
+
+        document.querySelector('.close-btn').addEventListener('click', () => {
+            if (mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+
+        overlay.addEventListener('click', () => {
+            if (mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileNav.contains(event.target) && !document.querySelector('.hamburger').contains(event.target)) {
+                if (mobileNav.classList.contains('active')) {
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            }
+        });
+    });
+
+
+
+
+
+    const experts = [
+        {
+            name: "JOHN DOE",
+            bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non risus nec nisi volutpat fermentum. Nulla facilisi.",
+            image: "/static/assets/images/pexels-chanita-sykes-417447-1094544.jpg"
+        },
+        {
+            name: "JANE SMITH",
+            bio: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed at dapibus nulla. Integer sit amet varius justo.",
+            image: "/static/assets/images/pexels-chanita-sykes-417447-1094544.jpg"
+        },
+        {
+            name: "SAMUEL LEE",
+            bio: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse potenti.",
+            image: "/static/assets/images/pexels-chanita-sykes-417447-1094544.jpg"
+        }
+    ];
+
+    let currentIndex = 0;
+
+    function updateBio() {
+        const { name, bio, image } = experts[currentIndex];
+        document.getElementById('expert-name').textContent = name;
+        document.getElementById('expert-bio').textContent = bio;
+        document.getElementById('expert-image').src = image;
+    }
+
+    function prevBio() {
+        currentIndex = (currentIndex === 0) ? experts.length - 1 : currentIndex - 1;
+        updateBio();
+    }
+
+    function nextBio() {
+        currentIndex = (currentIndex === experts.length - 1) ? 0 : currentIndex + 1;
+        updateBio();
+    }
+
+
+
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+
+
+
+
+    $(".custom-carousel").owlCarousel({
+        autoWidth: true,
+        loop: true
+    });
+    $(document).ready(function () {
+        $(".custom-carousel .item").click(function () {
+            $(".custom-carousel .item").not($(this)).removeClass("active");
+            $(this).toggleClass("active");
+        });
+    });
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const contactButton = document.getElementById("contactButton");
+        const contactFormMenu = document.getElementById('contactFormMenu');
+
+        if (!contactButton || !contactFormMenu) {
+            console.error('Contact button or form menu not found.');
+            return;
+        }
+
+        // Open contact form menu
+        contactButton.onclick = function () {
+            contactFormMenu.classList.add('active');
+        };
+
+        // Function to close the form
+        function closeForm() {
+            contactFormMenu.classList.remove('active');
+        }
+
+        // Add event listener for clicks outside the container
+        document.addEventListener('click', function (event) {
+            // Check if the click is outside the contactFormMenu and contactButton
+            if (!contactFormMenu.contains(event.target) && !contactButton.contains(event.target)) {
+                closeForm();
+            }
+        });
+
+        // Prevent clicks inside the contactFormMenu from closing the menu
+        contactFormMenu.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+    });
+</script>
+
+
+
+</body>
+
+</html>

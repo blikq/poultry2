@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+    label {
+        color: green;
+        font-size: 20px;
+    }
+
+    #clicks {
+        font-size: 1.25em;
+        border: none;
+        text-align: center;
+        color: white;
+        width: 15%;
+        cursor: pointer;
+    }
+
+    form input[type="text"] {
+        border: 1px solid green;
+        color: #888;
+        height: 30px;
+        margin-bottom: 16px;
+        margin-right: 6px;
+        margin-top: 2px;
+        outline: 0 none;
+        padding: 3px 3px 3px 5px;
+        width: 70%;
+        font-size: 12px;
+        line-height: 15px;
+        box-shadow: inset 0px 1px 4px #ECECEC;
+        -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+        -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+    }
+
+    textarea {
+        height: 90px;
+        border: 1px solid green;
+        color: #888;
+        margin-bottom: 16px;
+        margin-right: 6px;
+        margin-top: 2px;
+        outline: 0 none;
+        padding: 3px 3px 3px 5px;
+        width: 70%;
+        font-size: 12px;
+        line-height: 15px;
+        box-shadow: inset 0px 1px 4px #ECECEC;
+        -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+        -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    img {
+        width: 40px;
+        height: 40px
+    }
+</style>
+
+<body>
+
+    <div class="clear"></div>
+    <div style="width:90%;padding-left:50px;">
+        <div><a href="#" style="text-decoration: none">Home</a> <a href="#" style="text-decoration: none">
+            </a>/<a href="#" style="text-decoration: none"><b>Contact</b></a> <br /></div>
+        <br /><br />
+        <div>
+            <div>
+                <label style="font-size:30px"><b>Contact</b></label>
+                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+            </div>
+            <br /><br />
+            <div style='float: left; width:50%;'>
+                <label>CONTACT US</label>
+                <hr style="width:90%;float:left; height:3px;background-color: lightsteelblue" />
+                <form>
+                    <input type="text" placeholder="Name *" />
+                    <input type="text" placeholder="Phone *" />
+                    <input type="text" placeholder="Email *" />
+                    <textarea placeholder="Message *"></textarea><br />
+                    <button id='clicks'
+                        style="background-color: lightsteelblue; color:white; padding: 10px 10px 10px 10px">SUBMIT</button>
+                </form>
+            </div>
+            <div style='float: left; width:50%;'>
+                <label>REACH US</label>
+                <hr style="width:90%;float:left; height:3px;background-color: lightsteelblue" />
+                <div class="clear"></div>
+                <div>
+                    <p>Company Name<br /></p>
+                    <p>
+                        The Number of Street<br />
+                        State/City<br />
+                    </p>
+                    <p>
+                        Phone: (000) 000-0000<br />
+                        Fax: (000) 000-0000<br />
+                    </p>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQWOotOf58xTU3bxZ1gVGpeiYdxrPg5BD2tAA3xfYc_zbPsRjeOpqj2w" />
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC876PQpIQ0cswsYIJ6U9UN4TOjDuJ4D58vOl2uSG25XRWSlqT" />
+                    <img
+                        src="data:image/png;base64,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" />
+                    <img
+                        src="https://coldwellbankervi.com/wp-content/themes/coldwell-residential/images/icon_pinterest.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
